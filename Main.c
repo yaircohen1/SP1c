@@ -13,7 +13,7 @@ int main () {
 
     switch (option)
     {
-        case 1:
+        case 1: {
             int wordsCount = 0;
             scanf("%d", &wordsCount);
             for (int i = 0; i < wordsCount; i++)
@@ -27,7 +27,9 @@ int main () {
                 }
             }
             break;
+        }
 
+            
         case 2: 
             scanf("%d", &index);
             inputStr = malloc(sizeof(char)* 1000);
@@ -48,27 +50,31 @@ int main () {
             printf("\n");
             break;
         
-        case 4:
+        case 4: {
             int size = 0;
             size = StrList_size(n);
             printf("%d\n",size);
             printf("\n");
             break;
+        }
+        
    
-        case 5:
+        case 5: {
             scanf("%d", &index);
             StrList_printAt(n, index);
             printf("\n");
             break;
+        }
 
-        case 6:
+        case 6: {
             int len = 0;
             len = StrList_printLen(n);
             printf("%d",len);
             printf("\n");
             break;
+        }
 
-        case 7:
+        case 7: {
             inputStr = malloc(sizeof(char) * 1000);
             scanf("%s",inputStr);
             if (inputStr != NULL)
@@ -80,6 +86,7 @@ int main () {
                 free(inputStr);
             }
             break;
+        }
         
         case 8:
             inputStr = malloc(sizeof(char) * 1000);
