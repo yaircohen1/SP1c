@@ -74,7 +74,7 @@ size_t StrList_size(const StrList *StrList)
 
 void StrList_insertLast(StrList *StrList, const char *data) {
   Node *curr = StrList->head; 
-  Node *tmp = Node_alloc(data, curr);
+  Node *tmp = Node_alloc(data, NULL);
   if (curr==NULL)
   {
     StrList->head = tmp;
@@ -92,32 +92,25 @@ void StrList_insertLast(StrList *StrList, const char *data) {
 }
 
 void StrList_insertAt(StrList *StrList, const char *data, int index) {
-  if (index<0 || index > StrList -> size)
-  {
+  if (index<0 || index > StrList -> size){
     return;
   }
-  Node *curr = StrList->head;
-  for (int i = 0; i <= index - 1; i++) {
-    curr = curr->_next;
+
+  Node *tmp = Node_alloc(data, NULL);
+  if (index==0){
+    tmp->_next = StrList->head;
+    StrList->head=tmp;
   }
-  // curr is the node before the index we want to add
-  // curr->_next is the node after the index we want to add
-  Node *after = curr->_next;
-
-  Node *newNode = (Node *)malloc(sizeof(Node)); // Allocation of memory space
-  newNode->_str = (char *)data;
-  newNode->index = index;
-
-  curr->_next = newNode;
-  newNode->_next = after;
-  StrList->size++; // newNode is in the list
-
-  // update the indexes
-  curr = after;
-  while (curr->_next != NULL) {
-    curr->index++;
-    curr = curr->_next;
+  else {
+    Node *p = StrList->head;
+    for(int i = 0; i<index-1; i++){
+      p = p->_next;
+    }
+    tmp->_next = p->_next;
+    p->_next =tmp;
   }
+  ++(StrList->size); 
+  
 }
 
 char *StrList_firstData(const StrList *StrList) {
@@ -127,6 +120,9 @@ void StrList_print(const StrList *StrList) {
   Node *p = StrList->head;
   while (p!=NULL) { 
     printf("%s", p->_str);
+     if (p->_next != NULL) {
+            printf(" "); // Add space between words
+        }
     p = p->_next;
   }
 }
@@ -163,7 +159,7 @@ int StrList_count(StrList *StrList, const char *data) {
   Node *p = StrList->head;
 
   while (p) {
-    if (p->_str == data) {
+    if (strcmp(p->_str, data) == 0) {
       counter++;
     }
     p = p->_next;
